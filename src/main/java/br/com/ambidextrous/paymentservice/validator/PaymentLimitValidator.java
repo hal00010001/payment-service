@@ -1,5 +1,7 @@
 package br.com.ambidextrous.paymentservice.validator;
 
+import br.com.ambidextrous.paymentservice.exceptions.PaymentLimitException;
+
 import java.math.BigDecimal;
 
 public class PaymentLimitValidator {
@@ -8,6 +10,11 @@ public class PaymentLimitValidator {
 
     public static boolean isWithinLimit(BigDecimal amount){
         if (amount == null) return false;
+
+        if (amount.compareTo(BigDecimal.ZERO) <= 0){
+            throw new PaymentLimitException("Amount must be greater than zero");
+        }
+
         return amount.compareTo(MAX_LIMIT) <= 0;
     }
 
