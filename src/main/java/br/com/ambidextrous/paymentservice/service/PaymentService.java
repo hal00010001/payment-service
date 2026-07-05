@@ -62,6 +62,12 @@ public class PaymentService {
         return new ModelMapper().map(payment, PaymentResponse.class);
     }
 
+    public List<PaymentResponse> getAllPayments(){
+        return paymentRepository.findAll().stream()
+                .map(payment -> new ModelMapper().map(payment, PaymentResponse.class))
+                .collect(Collectors.toList());
+    }
+
     public List<PaymentResponse> getPaymentsByPayerId(UUID payerId){
         return paymentRepository.findAllByPayerId(payerId).stream()
                 .map(payment -> new ModelMapper().map(payment, PaymentResponse.class))
